@@ -9,7 +9,7 @@ import Body from './components/Body';
 const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1');
 
 function App() {
-  const { connected, account, network, signAndSubmitTransaction } = useWallet();
+  const { connected, account, network, signAndSubmitTransaction, submitTransaction } = useWallet();
   const [balance, setBalance] = useState<number | null>(null);
 
   useEffect(() => {
@@ -37,10 +37,10 @@ function App() {
   }, [account, connected]);
 
   return (
-    <>
+    <div>
       <Header connected={connected} account={account} balance={balance} network={network} />
-      <Body connected={connected} account={account} balance={balance} network={network} signAndSubmitTransaction={signAndSubmitTransaction} client={client} />
-    </>
+      <Body connected={connected} account={account} balance={balance} network={network} signAndSubmitTransaction={signAndSubmitTransaction} client={client} submitTransaction={submitTransaction} />
+    </div>
   );
 }
 
