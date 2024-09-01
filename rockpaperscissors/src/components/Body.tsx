@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Flex, Button } from "antd";
 import { Aptos, MoveStructId, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 
-const Body = ({ connected, account, balance, network, signAndSubmitTransaction } : any) => {
+const Body = ({ connected, account, balance, network, signAndSubmitTransaction, submitTransaction } : any) => {
 
     const aptosConfig = new AptosConfig({ network: Network.TESTNET });
     const aptos = new Aptos(aptosConfig);
 
     const [playerMove, setPlayerMove] = useState<number | null>(null);
     const [computerMove, setComputerMove] = useState<number | null>(null);
-    const [gameResult, setGameResult] = useState<number | null>(null);
+    const [gameResult, setGameResult] = useState<String | null>(null);
     const exp = Math.floor(Date.now() / 1000) + 60 * 10
 
     const handleStartGame = async () => {
@@ -18,6 +18,7 @@ const Body = ({ connected, account, balance, network, signAndSubmitTransaction }
             sender: account.address,
             data: {
                 function: func,
+                functionArguments: []
             },
             options: {
                 expireTimestamp: exp,
@@ -56,34 +57,29 @@ const Body = ({ connected, account, balance, network, signAndSubmitTransaction }
             sender: account.address,
             data: {
                 function: func,
+                functionArguments: []
             },
             options: {
                 expireTimestamp: exp,
             }
         });
         try {
-            // await aptos.waitForTransaction({ transactionHash: response.hash });
+            await aptos.waitForTransaction({ transactionHash: response.hash });
             console.log(response)
         } catch (error) {
             console.error(error);
         }
     }
-    const handleSetComputerMove2 = async () => {
+    const getComputerMove = async () => {
         const func: MoveStructId = "0x8a25712c73adb887339dd88a5f46512133bd927a5555f045257496752353f918::RockPaperScissors::get_computer_move"
-        const response = await signAndSubmitTransaction({
-            sender: account.address,
-            data: {
+        const response = await aptos.view({ 
+            payload: {
                 function: func,
-            },
-            options: {
-                expireTimestamp: exp,
+                functionArguments: [account.address]
             }
-        });
-        try {
-            console.log(response)
-        } catch (error) {
-            console.error(error);
-        }
+         })
+        console.log(response)
+        setComputerMove(Number(response[0]))
     }
     const handleFinalizeGameResults = async () => {
         const func: MoveStructId = "0x8a25712c73adb887339dd88a5f46512133bd927a5555f045257496752353f918::RockPaperScissors::finalize_game_results"
@@ -91,6 +87,7 @@ const Body = ({ connected, account, balance, network, signAndSubmitTransaction }
             sender: account.address,
             data: {
                 function: func,
+                functionArguments: []
             },
             options: {
                 expireTimestamp: exp,
@@ -104,27 +101,50 @@ const Body = ({ connected, account, balance, network, signAndSubmitTransaction }
         }
     }
 
+    const getGameResults = async () => {
+        const func: MoveStructId = "0x8a25712c73adb887339dd88a5f46512133bd927a5555f045257496752353f918::RockPaperScissors::get_game_results"
+        const response = await aptos.view({ 
+            payload: {
+                function: func,
+                functionArguments: [account.address]
+            }
+         })
+        console.log(response)
+        if (Number(response[0]) === 1) setGameResult("Draw!")
+        if (Number(response[0]) === 2) setGameResult("You win!")
+        if (Number(response[0]) === 3) setGameResult("Computer wins!")
+    }
+
     return (
         <>
-            {connected && account ? 
-                <Flex align="center" justify="space-around">
-                    <div id="player">
-                        <Button onClick={async () => await handleStartGame}>Start Game</Button><br /><br />
-                        <div>Set Player Move</div>
-                        <Button onClick={async () => await handleSetPlayerMove(1)}>1</Button>
-                        <Button onClick={async () => await handleSetPlayerMove(2)}>2</Button><br /><br />
-                        <Button onClick={async () => await handleSetComputerMove()}>Randomly Set Computer Move</Button><br /><br />
-                        <Button onClick={async () => await handleFinalizeGameResults()}>Finalize Game Results</Button><br />
-                    </div>
-
-                    <div id="results">
-                        <p>-</p>
+            {connected && account ? (
+                <div>
+                    <Flex align="center" justify="space-between">
+                        <p>Start Game</p>
+                        <Button onClick={async () => await handleStartGame}>Start Game</Button>
+                        <p></p>
+                    </Flex>
+                    <Flex align="center" justify="space-between">
+                        <p>Set Player Move</p>
+                        <div>
+                            <Button onClick={async () => await handleSetPlayerMove(1)}>1</Button>
+                            <Button onClick={async () => await handleSetPlayerMove(2)}>2</Button>
+                        </div>
                         <p>{playerMove}</p>
-                        <p>Get Computer Move</p>
-                        <p>Get Game Results</p>
-                    </div>
-                </Flex> : (
-                    <div>Connect wallet to continue...</div>
+                    </Flex>
+                    <Flex align="center" justify="space-between">
+                        <p>Randomly Set Computer Move</p>
+                        <Button onClick={async () => {await handleSetComputerMove(); await getComputerMove()}}>Randomly Set Computer Move</Button>
+                        <p>{computerMove}</p>
+                    </Flex>
+                    <Flex align="center" justify="space-between">
+                        <p>Finalize Game Results</p>
+                        <Button onClick={async () => {await handleFinalizeGameResults(); await getGameResults()}}>Finalize Game Results</Button>
+                        <p>{gameResult}</p>
+                    </Flex>
+                </div>
+                ) : (
+                <div>Connect wallet to continue...</div>
                 )
             }
         </>

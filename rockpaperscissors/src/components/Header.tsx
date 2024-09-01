@@ -3,13 +3,13 @@ import { Flex } from "antd";
 
 const Header = ({ connected, account, balance, network } : any) => {
     return (
-        <Flex align="center" justify="space-evenly">
+        <Flex align="center" justify="space-between">
             <WalletSelector />
             {connected && account ? (
-                <Flex align="center" justify="space-around">
+                <>
                     <p>Network: {network ? network.name : 'Unknown'}</p>
                     <p>Testnet Balance: {balance !== null ? `${balance} APT` : 'Loading...'}</p>
-                </Flex>
+                </>
             ) : (
                 <p>No wallet connected</p>
             )}
