@@ -112,7 +112,7 @@ const Body = ({ connected, account, balance, network, signAndSubmitTransaction }
                         <Button onClick={async () => await handleStartGame}>Start Game</Button><br /><br />
                         <div>Set Player Move</div>
                         <Button onClick={async () => await handleSetPlayerMove(1)}>1</Button>
-                        <Button onClick={async () => await handleSetPlayerMove(1)}>2</Button><br /><br />
+                        <Button onClick={async () => await handleSetPlayerMove(2)}>2</Button><br /><br />
                         <Button onClick={async () => await handleSetComputerMove()}>Randomly Set Computer Move</Button><br /><br />
                         <Button onClick={async () => await handleFinalizeGameResults()}>Finalize Game Results</Button><br />
                     </div>
