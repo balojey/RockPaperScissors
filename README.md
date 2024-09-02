@@ -19,6 +19,10 @@ This project serves as a frontend to the Aptos RockPaperScissors Game Smart Cont
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+- Clone project - `git clone https://github.com/balojey/rockpaperscissors`
+- Change directory - `cd rockpaperscissors`
+- Install dependencies - `npm install`
+
 ### Available Scripts
 
 In the project directory, you can run:
