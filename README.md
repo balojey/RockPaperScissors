@@ -5,13 +5,13 @@ This project serves as a frontend to the Aptos RockPaperScissors Game Smart Cont
 ## Demo
 
 - Demo 1
-[!Rock Paper Scissors 1](assets/rockpaper1.png)
+![Rock Paper Scissors 1](assets/rockpaper1.png)
 - Demo 2
-[!Rock Paper Scissors 2](assets/rockpaper2.png)
+![Rock Paper Scissors 2](assets/rockpaper2.png)
 - Demo 3
-[!Rock Paper Scissors 3](assets/rockpaper3.png)
+![Rock Paper Scissors 3](assets/rockpaper3.png)
 - Demo 4
-[!Rock Paper Scissors 4](assets/rockpaper4.png)
+![Rock Paper Scissors 4](assets/rockpaper4.png)
 
 ## Setup
 
