@@ -37,9 +37,9 @@ function App() {
   }, [account, connected]);
 
   return (
-    <div>
-      <Header connected={connected} account={account} balance={balance} network={network} />
-      <Body connected={connected} account={account} balance={balance} network={network} signAndSubmitTransaction={signAndSubmitTransaction} client={client} submitTransaction={submitTransaction} />
+    <div className='content'>
+        <Header connected={connected} account={account} balance={balance} network={network} />
+        <Body connected={connected} account={account} balance={balance} network={network} signAndSubmitTransaction={signAndSubmitTransaction} client={client} submitTransaction={submitTransaction} />
     </div>
   );
 }

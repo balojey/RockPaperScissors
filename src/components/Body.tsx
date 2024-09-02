@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Flex, Button } from "antd";
 import { Aptos, MoveStructId, AptosConfig, Network } from "@aptos-labs/ts-sdk";
+import { Typography } from "antd";
 
 const Body = ({ connected, account, balance, network, signAndSubmitTransaction, submitTransaction } : any) => {
 
@@ -116,38 +117,42 @@ const Body = ({ connected, account, balance, network, signAndSubmitTransaction, 
     }
 
     return (
-        <>
+        <div className="body">
             {connected && account ? (
                 <div>
-                    <Flex align="center" justify="space-between">
-                        <p>Start Game</p>
-                        <Button onClick={async () => await handleStartGame}>Start Game</Button>
-                        <p></p>
+                    <Typography.Title>Rock Paper Scissors</Typography.Title>
+                    <Flex align="center" justify="space-between" className="row">
+                        <Typography.Paragraph>Start Game</Typography.Paragraph>
+                        <Button type="primary" size="large" onClick={async () => await handleStartGame}>Start Game</Button>
+                        <Typography.Paragraph></Typography.Paragraph>
                     </Flex>
-                    <Flex align="center" justify="space-between">
-                        <p>Set Player Move</p>
+                    <Flex align="center" justify="space-between" className="row">
+                        <Typography.Paragraph>Select Your Move</Typography.Paragraph>
                         <div>
-                            <Button onClick={async () => await handleSetPlayerMove(1)}>1</Button>
-                            <Button onClick={async () => await handleSetPlayerMove(2)}>2</Button>
+                            <Button type="primary" size="large" onClick={async () => await handleSetPlayerMove(1)}>1</Button>
+                            <Typography.Text> | </Typography.Text>
+                            <Button type="primary" size="large" onClick={async () => await handleSetPlayerMove(2)}>2</Button>
+                            <Typography.Text> | </Typography.Text>
+                            <Button type="primary" size="large" onClick={async () => await handleSetPlayerMove(3)}>3</Button>
                         </div>
-                        <p>{playerMove}</p>
+                        <Typography.Paragraph>{playerMove}</Typography.Paragraph>
                     </Flex>
-                    <Flex align="center" justify="space-between">
-                        <p>Randomly Set Computer Move</p>
-                        <Button onClick={async () => {await handleSetComputerMove(); await getComputerMove()}}>Randomly Set Computer Move</Button>
-                        <p>{computerMove}</p>
+                    <Flex align="center" justify="space-between" className="row">
+                        <Typography.Paragraph>Randomly Select Computer Move</Typography.Paragraph>
+                        <Button type="primary" size="large" onClick={async () => {await handleSetComputerMove(); await getComputerMove()}}>Randomly Set Computer Move</Button>
+                        <Typography.Paragraph>{computerMove}</Typography.Paragraph>
                     </Flex>
-                    <Flex align="center" justify="space-between">
-                        <p>Finalize Game Results</p>
-                        <Button onClick={async () => {await handleFinalizeGameResults(); await getGameResults()}}>Finalize Game Results</Button>
-                        <p>{gameResult}</p>
+                    <Flex align="center" justify="space-between" className="row">
+                        <Typography.Paragraph>Finalize Game Results</Typography.Paragraph>
+                        <Button type="primary" size="large" onClick={async () => {await handleFinalizeGameResults(); await getGameResults()}}>Finalize Game Results</Button>
+                        <Typography.Paragraph>{gameResult}</Typography.Paragraph>
                     </Flex>
                 </div>
                 ) : (
-                <div>Connect wallet to continue...</div>
+                <Typography.Title>Connect wallet to continue...</Typography.Title>
                 )
             }
-        </>
+        </div>
     );
 }
 

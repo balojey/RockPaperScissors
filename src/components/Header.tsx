@@ -1,5 +1,5 @@
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
-import { Flex } from "antd";
+import { Flex, Typography } from "antd";
 
 const Header = ({ connected, account, balance, network } : any) => {
     return (
@@ -7,11 +7,11 @@ const Header = ({ connected, account, balance, network } : any) => {
             <WalletSelector />
             {connected && account ? (
                 <>
-                    <p>Network: {network ? network.name : 'Unknown'}</p>
-                    <p>Testnet Balance: {balance !== null ? `${balance} APT` : 'Loading...'}</p>
+                    <Typography.Paragraph>Network: {network ? network.name : 'Unknown'}</Typography.Paragraph>
+                    <Typography.Paragraph>Testnet Balance: {balance !== null ? `${balance} APT` : 'Loading...'}</Typography.Paragraph>
                 </>
             ) : (
-                <p>No wallet connected</p>
+                <Typography.Paragraph>No wallet connected</Typography.Paragraph>
             )}
         </Flex>
     );
