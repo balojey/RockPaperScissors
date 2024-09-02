@@ -1,5 +1,7 @@
 # Aptos Rock Paper Scissors Game
 
+[Live app](https://rockpaperscissors-sable.vercel.app/)
+
 This project serves as a frontend to the Aptos RockPaperScissors Game Smart Contract [See](https://explorer.aptoslabs.com/account/0x8a25712c73adb887339dd88a5f46512133bd927a5555f045257496752353f918/modules/view/RockPaperScissors/get_player_move?network=testnet).
 
 ## Demo
